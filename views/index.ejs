@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+  /* Style for the dialog */
+  #myDialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: none;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it's above everything else */
+  }
+  /* Style for the dialog content */
+  #dialogContent {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Student Records</h1>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Roll Number</th>
+                    <th>Name</th>
+                    <th>Degree</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% student.forEach(function(stud) { %>
+                    <tr>
+                        <td><%= stud.roll_number %></td>
+                        <td><%= stud.name %></td>
+                        <td><%= stud.degree %></td>
+                        <td><%= stud.city %></td>
+                        <th>
+                            <!-- Update button -->
+                            <button onclick="document.getElementById('myDialog').style.display = 'flex'" class="btn btn-secondary">Update</button>
+                            <div id="myDialog">
+                                <div id="dialogContent">
+                                    <form action="/update" method="POST" style="display: inline;">
+                                        <input type="hidden" name="old_roll_number" value="<%= stud.roll_number %>">
+                                        <p>Roll Number:</p>
+                                        <input type="text" placeholder="roll_number" name="roll_number" value="<%= stud.roll_number %>">
+                                        <p>Name</p>
+                                        <input type="text" placeholder="name" name="name" value="<%= stud.name %>">
+                                        <p>Degree</p>
+                                        <input type="text" placeholder="degree" name="degree" value="<%= stud.degree %>">
+                                        <p>City</p>
+                                        <input type="text" placeholder="city" name="city" value="<%= stud.city %>"> <br>
+                                        <button type="submit" class="mt-5 btn btn-success">Update</button> <br>
+                                        <button type="button" onclick="window.location.href = '/'" class="mt-1 btn btn-secondary">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Delete button -->
+                            <form action="/delete" method="POST" style="display: inline;">
+                                <input type="hidden" name="roll_number" value="<%= stud.roll_number %>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </th>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <h5>Insert Student Record</h5>
+        <form action="/create" method="POST">
+            <input type="text" name="roll_number" placeholder="Roll Number" required>
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="degree" placeholder="Degree" required>
+            <input type="text" name="city" placeholder="City" required>
+            <button type="submit">Submit</button>
+        </form>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

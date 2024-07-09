@@ -1,0 +1,13 @@
+student{
+	roll_number
+	name 
+	degree 
+	city 
+}
+
+db name - students
+collection name - student
+
+run with npm - 
+"npm install"
+"npm test"
