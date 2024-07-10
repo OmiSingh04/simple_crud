@@ -3,7 +3,7 @@
 
 <style>
   /* Style for the dialog */
-  #myDialog {
+  .myDialog {
     position: fixed;
     top: 0;
     left: 0;
@@ -16,7 +16,7 @@
     z-index: 1000; /* Ensure it's above everything else */
   }
   /* Style for the dialog content */
-  #dialogContent {
+  .dialogContent {
     background: white;
     padding: 20px;
     border-radius: 5px;
@@ -59,7 +59,7 @@
                 </tr>
             </thead>
             <tbody>
-                <% student.forEach(function(stud) { %>
+                <% student.forEach(function(stud, index) { %>
                     <tr>
                         <td><%= stud.roll_number %></td>
                         <td><%= stud.name %></td>
@@ -67,9 +67,9 @@
                         <td><%= stud.city %></td>
                         <th>
                             <!-- Update button -->
-                            <button onclick="document.getElementById('myDialog').style.display = 'flex'" class="btn btn-secondary">Update</button>
-                            <div id="myDialog">
-                                <div id="dialogContent">
+                            <button onclick="document.getElementById('myDialog<%= index %>').style.display = 'flex'" class="btn btn-secondary">Update</button>
+                            <div class="myDialog" id="myDialog<%= index %>">
+                                <div class="dialogContent" id="dialogContent<%= index %>">
                                     <form action="/update" method="POST" style="display: inline;">
                                         <input type="hidden" name="old_roll_number" value="<%= stud.roll_number %>">
                                         <p>Roll Number:</p>
